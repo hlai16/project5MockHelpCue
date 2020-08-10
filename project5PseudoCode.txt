@@ -1,0 +1,11 @@
+// create react app
+// setup firebase
+// setup App.js
+// constructor
+//render 
+//mount
+//get users' question input .onSubmit
+// place users' input into const
+// post users' input into DOM
+// create .remove buttons, .toggleClass buttons (red, green)
+// .onClick buttons, users can .remove posts, or change background colors of posts.
