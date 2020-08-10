@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/project5MockHelpCue/static/css/main.5f361e03.chunk.css",
+    "main.js": "/project5MockHelpCue/static/js/main.017f6b1d.chunk.js",
+    "main.js.map": "/project5MockHelpCue/static/js/main.017f6b1d.chunk.js.map",
+    "runtime-main.js": "/project5MockHelpCue/static/js/runtime-main.6b8ef4e9.js",
+    "runtime-main.js.map": "/project5MockHelpCue/static/js/runtime-main.6b8ef4e9.js.map",
+    "static/js/2.765ed792.chunk.js": "/project5MockHelpCue/static/js/2.765ed792.chunk.js",
+    "static/js/2.765ed792.chunk.js.map": "/project5MockHelpCue/static/js/2.765ed792.chunk.js.map",
+    "index.html": "/project5MockHelpCue/index.html",
+    "precache-manifest.c3ebc08cef93f61cbfe517a68c242a54.js": "/project5MockHelpCue/precache-manifest.c3ebc08cef93f61cbfe517a68c242a54.js",
+    "service-worker.js": "/project5MockHelpCue/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/project5MockHelpCue/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.765ed792.chunk.js.LICENSE.txt": "/project5MockHelpCue/static/js/2.765ed792.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6b8ef4e9.js",
+    "static/js/2.765ed792.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.017f6b1d.chunk.js"
+  ]
+}
