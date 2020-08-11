@@ -14,7 +14,7 @@ html {
 }
 
 body {
-  background-color: lemonchiffon;
+  background-color: rgba(205, 255, 224, 0.774);
   margin: 0;
 }
 
@@ -29,9 +29,8 @@ body {
   margin-top: 8rem;
 }
 
-.h1, 
-p {
-  color: rgb(1, 75, 32);
+.h1{
+  color: rgb(5, 45, 224);
   font-family: cursive; 
 }
 
@@ -54,6 +53,28 @@ textarea {
 button {
   width: 18%;
   padding: 1%;
+}
+
+.questionBox {
+  background-color: #fffefe;
+  border: 1px solid #555;
+  margin: 3rem auto;  
+} 
+
+ul {
+  margin: 15rem auto;
+}
+
+li {
+  list-style: none;
+}
+
+.questionBox p{
+  padding: 0 1rem;
+}
+
+.green {
+  background-color: rgba(0, 255, 76, 0.52);
 }
 
 

@@ -8,7 +8,8 @@ class App extends Component {
     super();
     this.state = {
       queues: [],
-      userAsk: ''
+      userAsk: '',
+      clickOK: false
     }
   }
 
@@ -32,7 +33,7 @@ class App extends Component {
       console.log('helpcueUpdated', helpcueUpdated)
 
       this.setState({
-        questions: helpcueUpdated
+        queues: helpcueUpdated
       })
     })
   }
@@ -43,7 +44,7 @@ class App extends Component {
     })
   }
 
-  submit = (event) => {
+  submitQuestion = (event) => {
     event.preventDefault();
 
     const dbRef = firebase.database().ref();
@@ -61,6 +62,12 @@ class App extends Component {
     dbRef.child(cueID).remove()
   }
 
+  toggle(event) {
+    this.setState({
+      clickOK: !this.state.clickOK
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -71,9 +78,32 @@ class App extends Component {
               <label htmlFor="question" className="sr-only">Please type your question here</label>
               <textarea onChange={this.getUserInput} value={this.state.userAsk} id="question" row="20" placeholder="Type your question here" />
             </div>
-            <button onClick={this.submit}>Help Please 😣</button>
+            <button onClick={this.submitQuestion}>Help Please 😣</button>
           </form>
+          <ul>
+            {
+              this.state.queues.map((waitingForHelp) => {
+                return (
+                  <li key={waitingForHelp.id}>
+                    <div className="questionBox">
+                      <div className="actualQuestion">
+                        <p>{waitingForHelp.question}</p>
+                      </div>
+                      <button onClick={() => this.deleteQuestion(waitingForHelp.id)}>🚮</button>
+                      <button onClick={e => this.toggle(e)}>🦸‍♂️</button>
+                      <button onClick={e => this.toggle(e)}>⛔</button>
+                    </div>
+                  </li>
+                )
+              })
+            }
+          </ul>
         </div>
+        <footer>
+          <div className="wrapper">
+            <p>&copy; Copyright 2020 Gloria Lai Juno College Project5</p>
+          </div>
+        </footer>
       </div>
     );
   }
