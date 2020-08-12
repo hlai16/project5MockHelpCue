@@ -9,7 +9,8 @@ class App extends Component {
     this.state = {
       queues: [],
       userAsk: '',
-      clickOK: false
+      clickHelped: false,
+      clickStop: false
     }
   }
 
@@ -30,8 +31,6 @@ class App extends Component {
         }
         helpcueUpdated.push(waitingForHelp)
       }
-      console.log('helpcueUpdated', helpcueUpdated)
-
       this.setState({
         queues: helpcueUpdated
       })
@@ -56,15 +55,24 @@ class App extends Component {
   }
 
   deleteQuestion = (cueID) => {
-    console.log('deleted', cueID)
-
     const dbRef = firebase.database().ref();
     dbRef.child(cueID).remove()
   }
 
-  toggle(event) {
+  // Took me ages to solve this part.... I miss jquery....
+
+  toggleGreen = (e) => {
+    e.preventDefault();
     this.setState({
-      clickOK: !this.state.clickOK
+      clickHelped: e.target.value,
+      clickHelped: !this.state.clickHelped
+    })
+  }
+
+  toggleRed(e) {
+    e.preventDefault();
+    this.setState({
+      clickStop: !this.state.clickStop
     })
   }
 
@@ -78,7 +86,7 @@ class App extends Component {
               <label htmlFor="question" className="sr-only">Please type your question here</label>
               <textarea onChange={this.getUserInput} value={this.state.userAsk} id="question" row="20" placeholder="Type your question here" />
             </div>
-            <button onClick={this.submitQuestion}>Help Please 😣</button>
+            <button onClick={this.submitQuestion}>Help!! 😣</button>
           </form>
           <ul>
             {
@@ -90,8 +98,8 @@ class App extends Component {
                         <p>{waitingForHelp.question}</p>
                       </div>
                       <button onClick={() => this.deleteQuestion(waitingForHelp.id)}>🚮</button>
-                      <button onClick={e => this.toggle(e)}>🦸‍♂️</button>
-                      <button onClick={e => this.toggle(e)}>⛔</button>
+                      <button className={this.state.clickHelped ? "button green" : "button"} onClick={e => this.toggleGreen(e)} key={waitingForHelp.id}>🦸‍♂️</button>
+                      <button className={this.state.clickStop ? "button red" : "button"} onClick={e => this.toggleRed(e)}>⛔</button>
                     </div>
                   </li>
                 )
