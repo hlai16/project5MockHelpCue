@@ -8,8 +8,7 @@ class App extends Component {
     super();
     this.state = {
       queues: [],
-      userAsk: '',
-      clickHelped: false,
+      userAsk: "",
       clickStop: false
     }
   }
@@ -18,8 +17,6 @@ class App extends Component {
     const dbRef = firebase.database().ref();
 
     dbRef.on('value', (response) => {
-      console.log('response', response.val())
-
       const data = response.val();
 
       const helpcueUpdated = [];
@@ -27,7 +24,8 @@ class App extends Component {
       for (let propertyName in data) {
         const waitingForHelp = {
           id: propertyName,
-          question: data[propertyName]
+          question: data[propertyName],
+          clickHelped: false
         }
         helpcueUpdated.push(waitingForHelp)
       }
@@ -50,7 +48,7 @@ class App extends Component {
     dbRef.push(this.state.userAsk)
 
     this.setState({
-      userAsk: ''
+      userAsk: ""
     })
   }
 
@@ -61,16 +59,24 @@ class App extends Component {
 
   // Took me ages to solve this part.... I miss jquery....
 
-  toggleGreen = (e) => {
-    e.preventDefault();
-    this.setState({
-      clickHelped: e.target.value,
-      clickHelped: !this.state.clickHelped
+
+  toggleGreen = (cueID, cueState) => {
+    const queueCopy = [...this.state.queues];
+    const updatedCopy = queueCopy.map((question) => {
+      return question.id === cueID
+        ? question.clickHelped = !question.cueState && 
+        question.question
+        : question.clickHelped === question.cueState && 
+        question.question
     })
+    this.setState({
+      queues: updatedCopy
+    })
+    console.log('updatedCopy', updatedCopy)
   }
 
-  toggleRed(e) {
-    e.preventDefault();
+
+  toggleRed() {
     this.setState({
       clickStop: !this.state.clickStop
     })
@@ -86,20 +92,20 @@ class App extends Component {
               <label htmlFor="question" className="sr-only">Please type your question here</label>
               <textarea onChange={this.getUserInput} value={this.state.userAsk} id="question" row="20" placeholder="Type your question here" />
             </div>
-            <button onClick={this.submitQuestion}>Help!! 😣</button>
+            <button onClick={this.submitQuestion}>Help!! <span>😣</span></button>
           </form>
           <ul>
             {
-              this.state.queues.map((waitingForHelp) => {
+              this.state.queues.map((question) => {
                 return (
-                  <li key={waitingForHelp.id}>
+                  <li key={question.id}>
                     <div className="questionBox">
                       <div className="actualQuestion">
-                        <p>{waitingForHelp.question}</p>
+                        <p>{question.question}</p>
                       </div>
-                      <button onClick={() => this.deleteQuestion(waitingForHelp.id)}>🚮</button>
-                      <button className={this.state.clickHelped ? "button green" : "button"} onClick={e => this.toggleGreen(e)} key={waitingForHelp.id}>🦸‍♂️</button>
-                      <button className={this.state.clickStop ? "button red" : "button"} onClick={e => this.toggleRed(e)}>⛔</button>
+                      <button onClick={() => this.deleteQuestion(question.id)}><span>🚮</span></button>
+                      <button className={() => this.toggleGreen(question.clickHelped) ? "button green" : "button"} onClick={() => this.toggleGreen(question.id)}><span>🦸‍♂️</span></button>
+                      <button className={this.state.clickStop ? "button red" : "button"} onClick={() => this.toggleRed()}><span>⛔</span></button>
                     </div>
                   </li>
                 )
