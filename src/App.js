@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import firebase from './firebase.js';
+import ToggleGreen from './ToggleGreen';
+import ToggleRed from './ToggleRed';
+import LikeButton from './LikeButton';
 import './App.css';
 
 
@@ -9,7 +12,6 @@ class App extends Component {
     this.state = {
       queues: [],
       userAsk: "",
-      clickStop: false
     }
   }
 
@@ -25,7 +27,6 @@ class App extends Component {
         const waitingForHelp = {
           id: propertyName,
           question: data[propertyName],
-          clickHelped: false
         }
         helpcueUpdated.push(waitingForHelp)
       }
@@ -57,30 +58,7 @@ class App extends Component {
     dbRef.child(cueID).remove()
   }
 
-  // Took me ages to solve this part.... I miss jquery....
-
-
-  toggleGreen = (cueID, cueState) => {
-    const queueCopy = [...this.state.queues];
-    const updatedCopy = queueCopy.map((question) => {
-      return question.id === cueID
-        ? question.clickHelped = !question.cueState && 
-        question.question
-        : question.clickHelped === question.cueState && 
-        question.question
-    })
-    this.setState({
-      queues: updatedCopy
-    })
-    console.log('updatedCopy', updatedCopy)
-  }
-
-
-  toggleRed() {
-    this.setState({
-      clickStop: !this.state.clickStop
-    })
-  }
+  
 
   render() {
     return (
@@ -104,8 +82,9 @@ class App extends Component {
                         <p>{question.question}</p>
                       </div>
                       <button onClick={() => this.deleteQuestion(question.id)}><span>🚮</span></button>
-                      <button className={() => this.toggleGreen(question.clickHelped) ? "button green" : "button"} onClick={() => this.toggleGreen(question.id)}><span>🦸‍♂️</span></button>
-                      <button className={this.state.clickStop ? "button red" : "button"} onClick={() => this.toggleRed()}><span>⛔</span></button>
+                      <ToggleGreen />
+                      <ToggleRed />
+                      <LikeButton />
                     </div>
                   </li>
                 )
